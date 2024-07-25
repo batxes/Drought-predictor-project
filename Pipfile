@@ -12,6 +12,7 @@ seaborn = "*"
 hyperopt = "*"
 xgboost = "*"
 mlflow = "*"
+prefect = "*"
 
 [dev-packages]
 

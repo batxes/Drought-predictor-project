@@ -11,3 +11,35 @@ services:
       - ./mlruns:/mlflow/mlruns
       - ./mlflow.db:/mlflow/mlflow.db
     command: mlflow server --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root /mlflow/mlruns --host 0.0.0.0 --port 5000
+
+      # postgres:
+      #   image: postgres:13
+      #   environment:
+      #     POSTGRES_DB: prefect
+      #     POSTGRES_USER: prefectuser
+      #     POSTGRES_PASSWORD: yourpassword
+      #   volumes:
+      #     - postgres_data:/var/lib/postgresql/data
+
+      # prefect-server:
+      #   image: prefecthq/prefect:2.0.4-python3.8
+      #   command: prefect orion start
+      #   environment:
+      #     PREFECT_API_DATABASE_CONNECTION_URL: postgresql+psycopg2://prefectuser:yourpassword@postgres/prefect
+      #   depends_on:
+      #     - postgres
+      #   ports:
+      #     - "4200:4200"
+      #   volumes:
+      #     - ./scripts:/root/scripts
+
+        #  prefect-agent:
+        #    image: prefecthq/prefect:2.0.4-python3.8
+        #    command: prefect work-queue create my_queue & prefect agent start
+        #    environment:
+        #      PREFECT_API_URL: http://prefect-server:4200/api
+        #    depends_on:
+        #      - prefect-server
+
+      #volumes:
+      #  postgres_data:
