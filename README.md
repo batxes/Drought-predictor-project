@@ -1,8 +1,43 @@
-# Drought-predictor-project
+# Drought-predictor-project (MLOps project)
+![Drought](https://github.com/batxes/Drought-predictor-project/blob/main/image.jpg)
 
+## About the project
 
+This is an end-to-end Machine Learning project that trains a model with a pipeline, tracks the experiments, deploys the model, monitors the performance and follows best practices.
 
-### steps I followed
+## Description of the project
+
+We want to predict continental US drought levels using meteorological and soil data.
+
+The data was downloaded from Kaggle and contains metereological and soil data.
+
+For each day, we have different measurements and each day was classified with a score: None if there was no drought, and 1 to 5, if there was a drought, indicating:
+
+- abnormally dry
+- moderate drought
+- severe drought
+- extreme drought
+- exceptional drought
+
+The idea of the data is to predict or classify the level of drought there could be, using meteorological data, which can be forecasted, which then could also be predicted if there could be a drought or not.
+
+Therefore, We trained a machine learning model that predicts if there could be a drought or not.
+
+The dataset can be found in: https://www.kaggle.com/datasets/cdminix/us-drought-meteorological-data
+
+## About the model
+
+The model is trained with Gradient Boosting algorithm.
+The dataset was last updated 3 years ago.
+
+## About the project
+
+- Data was explored, cleaned and preprocessed first in a jupyter notebook. I trained also the model in the notebook.
+- The code was cleaned and exported to a python script. 
+- I track the experiments and register the model using Mlflow.
+- I used Prefect for workflow orchestration.
+
+### Steps I followed
 1- pipenv install -r requirements.txt
 2- pipenv shell
 3- Create data, models, script folders and Dockerfile, docker-compose.yml, Makefile for later.
