@@ -13,6 +13,8 @@ hyperopt = "*"
 xgboost = "*"
 mlflow = "*"
 prefect = "*"
+flask = "*"
+gunicorn = "*"
 
 [dev-packages]
 

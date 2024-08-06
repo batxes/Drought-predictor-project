@@ -1,8 +1,6 @@
 # Drought-predictor-project (MLOps project)
 ![Drought](https://github.com/batxes/Drought-predictor-project/blob/main/image.jpg)
 
-## About the project
-
 This is an end-to-end Machine Learning project that trains a model with a pipeline, tracks the experiments, deploys the model, monitors the performance and follows best practices.
 
 ## Description of the project
@@ -28,17 +26,19 @@ The dataset can be found in: https://www.kaggle.com/datasets/cdminix/us-drought-
 ## About the model
 
 The model is trained with Gradient Boosting algorithm.
-The dataset was last updated 3 years ago.
 
 ## About the project
 
-- Data was explored, cleaned and preprocessed first in a jupyter notebook. I trained also the model in the notebook.
+- Data was explored, cleaned and preprocessed first in a jupyter notebook. First model training experiments were done in the notebook.
 - The code was cleaned and exported to a python script. 
-- I track the experiments and register the model using Mlflow.
+- I tracked the experiments and register the model using Mlflow.
 - I used Prefect for workflow orchestration.
 
 ## How to run the project
 
+- clone the project
+- mkdir data
+- Download the dataset from https://www.kaggle.com/datasets/cdminix/us-drought-meteorological-data?resource=download/ into the data folder
 - In the project directory, run `pipenv install -r requirements` and then `pipenv shell`
 - run Mlflow with `docker compose up` -> You can check the experiments information in http://localhost:5001/
 - run the project with `python train.py` -> You can check the pipeline in http://localhost:4200/
@@ -57,5 +57,12 @@ The dataset was last updated 3 years ago.
 11. Run the flow with: python train.py
 12. Check it with: prefect server start -> http://127.0.0.1:4200/dashboard
 13. I wanted to add the prefect commands to the docker compose but I am getting errors.
-14. 
+14. I generated a predict script that generates a random data and gets the prediction (predict.py)
+15. Convert predict.py into Flask app, so we can run from a docker container.
+16. Create another script that sends the request. Add the Data_generation function to it.
+17. Modify the Dockerfile
+18. Install flask and gunicorn 
+19. docker build -t drought_predictor .
+20. docker run -d -p 5000:5000 --name drought_container drough_predictor  -> to see that it is running
+21. run now: python send_prediction_request.py
 

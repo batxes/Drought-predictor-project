@@ -1,16 +1,34 @@
-FROM python:3.12-slim                                                 
+# Use the official Python image.
+FROM python:3.12-slim
 
-RUN pip install -U pip && pip install pipenv
+# Install build dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    make \
+    libffi-dev \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
 
+# Set the working directory
 WORKDIR /app
 
-COPY [ "Pipfile", "Pipfile.lock", "./" ]
+# Copy the requirements file first to leverage Docker cache
+COPY requirements.txt ./
 
-RUN pipenv install --system --deploy
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-#COPY [ "predict.py", "lin_reg.bin", "./" ]
-#
-#EXPOSE 9696
-#
-#ENTRYPOINT [ "gunicorn", "--bind=0.0.0.0:9696", "predict:app" ]
+# Copy the entire project directory to the container
+COPY . .
 
+# Expose the port on which your service will run
+EXPOSE 5000
+
+# Set environment variables
+ENV MODEL_PATH=/app/models/model_xgboost.bin
+ENV DV_PATH=/app/models/dv.bin
+
+# Command to run the Flask app with Gunicorn
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "scripts.predict:app"]

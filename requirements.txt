@@ -7,3 +7,5 @@ hyperopt
 xgboost
 mlflow
 prefect
+flask
+gunicorn
