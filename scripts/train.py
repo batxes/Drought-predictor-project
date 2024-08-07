@@ -19,14 +19,14 @@ import shutil
 import pickle
 import os
 
-from prometheus_client import start_http_server, Summary, Counter
+from prometheus_client import start_http_server, Summary, Counter, Gauge
 
 # Prometheus metrics
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
 TRAINING_COUNTER = Counter('model_training_count', 'Number of times the model has been trained')
+TRAINING_DURATION = Gauge('model_training_duration_seconds', 'Duration of the last model training in seconds')
 
-# Initialize Prometheus server
-start_http_server(8000)  # Start Prometheus metrics server on port 8000
+
 
 @task
 @REQUEST_TIME.time()
@@ -144,6 +144,7 @@ def train_and_log_model(X_train, y_train, X_val, y_val, X_test, y_test, dv):
 
         end_time = time.time()
         training_duration = end_time - start_time
+        TRAINING_DURATION.set(training_duration)
         
         # Make predictions on the validation set
         val_predictions = model.predict(X_val)

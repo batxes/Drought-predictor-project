@@ -24,11 +24,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose the port on which your service will run
-EXPOSE 5000
+EXPOSE 5002
 
 # Set environment variables
 ENV MODEL_PATH=/app/models/model_xgboost.bin
 ENV DV_PATH=/app/models/dv.bin
 
 # Command to run the Flask app with Gunicorn
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "scripts.predict:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:5002", "scripts.predict:app"]

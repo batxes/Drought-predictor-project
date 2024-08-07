@@ -32,6 +32,20 @@ services:
       - prometheus
 
 
+        #  drought_prediction:
+        #    build:
+        #      context: .
+        #    ports:
+        #      - "5002:5002"
+        #    environment:
+        #      - MODEL_PATH=/app/models/model_xgboost.bin
+        #      - DV_PATH=/app/models/dv.bin
+        #    depends_on:
+        #      - mlflow
+        #    expose:
+        #      - "5002"
+
+
 volumes:
   grafana-storage:
 

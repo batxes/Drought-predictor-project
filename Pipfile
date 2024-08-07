@@ -15,6 +15,7 @@ mlflow = "*"
 prefect = "*"
 flask = "*"
 gunicorn = "*"
+prometheus-client = "*"
 
 [dev-packages]
 

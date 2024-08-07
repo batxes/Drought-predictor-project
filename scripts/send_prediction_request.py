@@ -101,7 +101,7 @@ def generate_data():
     return data
 
 def send_request(data):
-    url = "http://localhost:5000/predict"
+    url = "http://localhost:5002/predict"
     headers = {"Content-Type": "application/json"}
     response = requests.post(url, headers=headers, data=json.dumps(data))
     
