@@ -33,6 +33,8 @@ The model is trained with Gradient Boosting algorithm.
 - The code was cleaned and exported to a python script. 
 - I tracked the experiments and register the model using Mlflow.
 - I used Prefect for workflow orchestration.
+- The model is containerized and can be deployed with docker. It starts a Gunicorn server with the prediction script which uses Flask.
+- The model can be tested with send_prediction_request.py
 
 ## How to run the project
 
@@ -42,6 +44,9 @@ The model is trained with Gradient Boosting algorithm.
 - In the project directory, run `pipenv install -r requirements` and then `pipenv shell`
 - run Mlflow with `docker compose up` -> You can check the experiments information in http://localhost:5001/
 - run the project with `python train.py` -> You can check the pipeline in http://localhost:4200/
+- docker build -t drought_predictor .
+- docker run -d -p 5000:5000 --name drought_container drough_predictor  -> to see that it is running
+- run now: python send_prediction_request.py
 
 ### Steps I followed
 1. pipenv install -r requirements.txt
@@ -65,4 +70,6 @@ The model is trained with Gradient Boosting algorithm.
 19. docker build -t drought_predictor .
 20. docker run -d -p 5000:5000 --name drought_container drough_predictor  -> to see that it is running
 21. run now: python send_prediction_request.py
+
+grafana in: http://localhost:3000/?orgId=1
 

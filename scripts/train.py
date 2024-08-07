@@ -19,8 +19,17 @@ import shutil
 import pickle
 import os
 
+from prometheus_client import start_http_server, Summary, Counter
+
+# Prometheus metrics
+REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
+TRAINING_COUNTER = Counter('model_training_count', 'Number of times the model has been trained')
+
+# Initialize Prometheus server
+start_http_server(8000)  # Start Prometheus metrics server on port 8000
 
 @task
+@REQUEST_TIME.time()
 def load_data():
 
     project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,6 +45,7 @@ def load_data():
     return train_data, test_data, val_data
 
 @task
+@REQUEST_TIME.time()
 def preprocess_data(train_data, test_data, val_data):
     train_data = train_data.dropna()
     test_data = test_data.dropna()
@@ -104,6 +114,8 @@ def preprocess_data(train_data, test_data, val_data):
     return X_train, y_train, X_val, y_val, X_test, y_test, dv
 
 @task
+@REQUEST_TIME.time()
+@TRAINING_COUNTER.count_exceptions()
 def train_and_log_model(X_train, y_train, X_val, y_val, X_test, y_test, dv):
 
     # Define the model
@@ -177,6 +189,7 @@ def train_and_log_model(X_train, y_train, X_val, y_val, X_test, y_test, dv):
 
 # Define a task to promote the model to staging
 @task
+@REQUEST_TIME.time()
 def promote_model_to_staging(model_version):
 
     from mlflow.tracking import MlflowClient
@@ -198,6 +211,7 @@ def promote_model_to_staging(model_version):
 # Define the Prefect flow
 @flow
 def mlflow_workflow():
+
     # Load data
     train_data, test_data, val_data, = load_data()
 
