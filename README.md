@@ -45,10 +45,10 @@ The model is trained with Gradient Boosting algorithm.
 ## How to run the project
 
 - clone the project
-- mkdir data
+- `mkdir data`
 - Download the dataset from https://www.kaggle.com/datasets/cdminix/us-drought-meteorological-data?resource=download/ into the data folder
-- make all
-- Run python scripts/send_prediction_request.py to randomly generate data for a day and send it to the deployed model so that it replies with a prediction, from 0 to 5.
+- `make all`
+- Run `python scripts/send_prediction_request.py` to randomly generate data for a day and send it to the deployed model so that it replies with a prediction, from 0 to 5.
 
 - Mlflow, for experiment tracking and registering:  http://localhost:5001/
 - Prefect, for workflow orchestration: http://localhost:4200/
@@ -65,38 +65,38 @@ The model is trained with Gradient Boosting algorithm.
     <img src="icons/prometheus.png" width="50">
     <img src="icons/grafana.png" width="100">
     <img src="icons/flask.png" width="40">
-    <img src="icons/prefect.png" width="60">
+    <img src="icons/prefect.png" width="30">
 </p>
 
 ### Steps I followed
-1. pipenv install -r requirements.txt
-2. pipenv shell
+1. `pipenv install -r requirements.txt`
+2. `pipenv shell`
 3. Create data, models, script folders and Dockerfile, docker-compose.yml, Makefile for later.
 4. jupyter notebook -> Model training
-5. Check the variables in mlflow with: pipenv run mlflow ui
+5. Check the variables in mlflow with: `pipenv run mlflow ui`
 6. Create a docker-compose.yml file with the MLflow tracking server.
-7. docker compose up (check the the mlflow ui is working)
+7. `docker compose up` (check the the mlflow ui is working)
 8. Take the code in the notebook to train.py
 9. Add prefect. Add to requirements.txt and also install with "pipenv install prefect"
 10. Define functions in the train.py: load, clean, train, promote...
-11. Run the flow with: python train.py
-12. Check it with: prefect server start -> http://127.0.0.1:4200/dashboard
+11. Run the flow with: `python scripts/train.py`
+12. Check it with: `prefect server start` -> http://127.0.0.1:4200/dashboard
 13. I wanted to add the prefect commands to the docker compose but I am getting errors.
-14. I generated a predict script that generates a random data and gets the prediction (predict.py)
+14. I generated the predict script which uses the model. I generate in the script a function that generates random data for the prediction.
 15. Convert predict.py into Flask app, so we can run from a docker container.
-16. Create another script that sends the request. Add the Data_generation function to it.
+16. Create another script that sends the request. Add the Data_generation function that was in the prediction script to this new script.
 17. Modify the Dockerfile
 18. Install flask and gunicorn
-19. docker build -t drought_predictor .
-20. docker run -d -p 5002:5002 --name drought_prediction drough_predictor  -> to see that it is running
-21. run now: python send_prediction_request.py
+19. `docker build -t drought_predictor .`
+20. `docker run -d -p 5002:5002 --name drought_prediction drough_predictor`  -> to see that it is running
+21. run now: `python send_prediction_request.py`
 22. I added some metrics to be recorded in the training and in the prediction scripts with prometheus, which will be then followed using grafana. docker-compose was updated and I added prometheus.yml file
 23. Grafana -> http://localhost:3000/
 24. Prometheus -> http://localhost:9090/
 24. Recorded metrics -> http://localhost:5002/metrics
 25. Added some unit tests and integration test
-25. I am setting flake8, a code linter. pipenv isntall flake8. I added the .flake8 file and it can be run typing: flake8
-26. I also installed black code formater. run: black .
-27. I will use pre-commit to automatically run flake8 and black before commits. Create .pre-commit-config.yaml. Install it: pre-commit install
+25. I am setting flake8, a code linter. pipenv isntall flake8. I added the .flake8 file and it can be run typing: `flake8`
+26. I also installed black code formater. run: `black .`
+27. I will use pre-commit to automatically run flake8 and black before commits. Create .pre-commit-config.yaml. Install it: `pre-commit install`
 28. Add a CI/CD pipeline. Create .github/workflows/ci_cd.yml
 29. Create a Makefile to run everything
