@@ -30,7 +30,7 @@ The model is trained with Gradient Boosting algorithm.
 ## About the project
 
 - Data was explored, cleaned and preprocessed first in a jupyter notebook. First model training experiments were done in the notebook.
-- The code was cleaned and exported to a python script. 
+- The code was cleaned and exported to a python script.
 - I tracked the experiments and register the model using Mlflow.
 - I used Prefect for workflow orchestration.
 - The model is containerized and can be deployed with docker. It starts a Gunicorn server with the prediction script which uses Flask.
@@ -45,7 +45,7 @@ The model is trained with Gradient Boosting algorithm.
 - run Mlflow with `docker compose up` -> You can check the experiments information in http://localhost:5001/
 - run the project with `python train.py` -> You can check the pipeline in http://localhost:4200/
 - docker build -t drought_predictor .
-- docker run -d -p 5000:5000 --name drought_container drough_predictor  -> to see that it is running
+- docker run -d -p 5002:5002 --name drought_prediction drough_predictor  -> to see that it is running
 - run now: python send_prediction_request.py
 
 ### Steps I followed
@@ -66,10 +66,17 @@ The model is trained with Gradient Boosting algorithm.
 15. Convert predict.py into Flask app, so we can run from a docker container.
 16. Create another script that sends the request. Add the Data_generation function to it.
 17. Modify the Dockerfile
-18. Install flask and gunicorn 
+18. Install flask and gunicorn
 19. docker build -t drought_predictor .
-20. docker run -d -p 5000:5000 --name drought_container drough_predictor  -> to see that it is running
+20. docker run -d -p 5002:5002 --name drought_prediction drough_predictor  -> to see that it is running
 21. run now: python send_prediction_request.py
-
-grafana in: http://localhost:3000/?orgId=1
-
+22. I added some metrics to be recorded in the training and in the prediction scripts with prometheus, which will be then followed using grafana. docker-compose was updated and I added prometheus.yml file
+23. Grafana -> http://localhost:3000/
+24. Prometheus -> http://localhost:9090/
+24. Recorded metrics -> http://localhost:5002/metrics
+25. Added some unit tests and integration test
+25. I am setting flake8, a code linter. pipenv isntall flake8. I added the .flake8 file and it can be run typing: flake8
+26. I also installed black code formater. run: black .
+27. I will use pre-commit to automatically run flake8 and black before commits. Create .pre-commit-config.yaml. Install it: pre-commit install
+28. Add a CI/CD pipeline. Create .github/workflows/ci_cd.yml
+29. Create a Makefile to run everything
