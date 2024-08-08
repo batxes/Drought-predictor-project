@@ -57,6 +57,16 @@ The model is trained with Gradient Boosting algorithm.
 - The Drought-predictor is running in http://localhost:5002/
 - To check the metrics that are being stored: http://localhost:5002/metrics
 
+## Tools/tech used:
+
+<p align="center">
+    <img src="icons/MLFlow.png" width="100">
+    <img src="icons/Docker.png" width="100">
+    <img src="icons/prometheus.png" width="50">
+    <img src="icons/grafana.png" width="100">
+    <img src="icons/flask.png" width="40">
+    <img src="icons/prefect.png" width="60">
+</p>
 
 ### Steps I followed
 1. pipenv install -r requirements.txt
