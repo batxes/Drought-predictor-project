@@ -201,7 +201,7 @@ def train_and_log_model(X_train, y_train, X_val, y_val, X_test, y_test, dv):
         mlflow.log_artifact(local_path=dv_path, artifact_path="models_pickle")
 
         # Register the model in the MLflow Model Registry
-        model_uri = f"runs: /{run.info.run_id}/model"
+        model_uri = "runs:/{}/model".format(run.info.run_id)
         registered_model = mlflow.register_model(model_uri, "drought-prediction-model")
 
         return registered_model.version

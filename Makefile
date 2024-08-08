@@ -8,7 +8,7 @@ PORT = 5002
 # Setup pipenv environment and install dependencies
 .PHONY: install
 install:
-	@$(PIPENV) install -r requirements.txt
+	@$(PIPENV) install -r requirements.txt 2>/dev/null
 
 # Run tests
 .PHONY: test
@@ -59,12 +59,12 @@ compose-down:
 # Start Prefect server
 .PHONY: start-prefect
 start-prefect:
-	@$(PIPENV) run prefect server start
+	@nohup $(PIPENV) run prefect server start > prefect_server.log 2>&1 &
 
 # Train model
 .PHONY: train
 train:
-	@$(PIPENV) run python train.py
+	@$(PIPENV) run python scripts/train.py
 
 # Run CI/CD pipeline (lint, format, test)
 .PHONY: ci
@@ -91,7 +91,7 @@ clean:
 
 # Install and run everything
 .PHONY: all
-all: install pre-commit lint format compose-up train
+all: install pre-commit lint format compose-up start-prefect train build
 
 # Help
 .PHONY: help

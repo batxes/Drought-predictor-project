@@ -31,22 +31,32 @@ The model is trained with Gradient Boosting algorithm.
 
 - Data was explored, cleaned and preprocessed first in a jupyter notebook. First model training experiments were done in the notebook.
 - The code was cleaned and exported to a python script.
-- I tracked the experiments and register the model using Mlflow.
+- I tracked the experiments and registered the model using Mlflow.
 - I used Prefect for workflow orchestration.
-- The model is containerized and can be deployed with docker. It starts a Gunicorn server with the prediction script which uses Flask.
+- The model is containerized and can be deployed with docker anywhere. It starts a Gunicorn server with the prediction script which uses Flask.
 - The model can be tested with send_prediction_request.py
+- Metrics in the training and prediction process are monitored with prometheus and visualized with grafana.
+- The project contains unit tests and integration test.
+- Linter and code formatter are used
+- There are pre-commit hooks
+- There is CI/CD pipeline
+- Everything can be run through the Makefile
 
 ## How to run the project
 
 - clone the project
 - mkdir data
 - Download the dataset from https://www.kaggle.com/datasets/cdminix/us-drought-meteorological-data?resource=download/ into the data folder
-- In the project directory, run `pipenv install -r requirements` and then `pipenv shell`
-- run Mlflow with `docker compose up` -> You can check the experiments information in http://localhost:5001/
-- run the project with `python train.py` -> You can check the pipeline in http://localhost:4200/
-- docker build -t drought_predictor .
-- docker run -d -p 5002:5002 --name drought_prediction drough_predictor  -> to see that it is running
-- run now: python send_prediction_request.py
+- make all
+- Run python scripts/send_prediction_request.py to randomly generate data for a day and send it to the deployed model so that it replies with a prediction, from 0 to 5.
+
+- Mlflow, for experiment tracking and registering:  http://localhost:5001/
+- Prefect, for workflow orchestration: http://localhost:4200/
+- Prometheus, for monitoring: http://localhost:9090/
+- Grafana, for metrics visualization: http://localhost:3000/
+- The Drought-predictor is running in http://localhost:5002/
+- To check the metrics that are being stored: http://localhost:5002/metrics
+
 
 ### Steps I followed
 1. pipenv install -r requirements.txt
