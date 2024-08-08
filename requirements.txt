@@ -1,0 +1,15 @@
+pandas
+jupyter
+scikit-learn
+matplotlib
+seaborn
+hyperopt
+xgboost
+mlflow
+prefect
+flask
+gunicorn
+prometheus-client
+flake8
+black
+pre-commit

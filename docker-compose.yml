@@ -31,57 +31,12 @@ services:
     depends_on:
       - prometheus
   drought_prediction:
+    build:
+      context: .
     image: drought_predictor
     container_name: drought_prediction
     ports:
       - "5002:5002"
 
-
-        #  drought_prediction:
-        #    build:
-        #      context: .
-        #    ports:
-        #      - "5002:5002"
-        #    environment:
-        #      - MODEL_PATH=/app/models/model_xgboost.bin
-        #      - DV_PATH=/app/models/dv.bin
-        #    depends_on:
-        #      - mlflow
-        #    expose:
-        #      - "5002"
-
-
 volumes:
   grafana-storage:
-
-      # postgres:
-      #   image: postgres:13
-      #   environment:
-      #     POSTGRES_DB: prefect
-      #     POSTGRES_USER: prefectuser
-      #     POSTGRES_PASSWORD: yourpassword
-      #   volumes:
-      #     - postgres_data:/var/lib/postgresql/data
-
-      # prefect-server:
-      #   image: prefecthq/prefect:2.0.4-python3.8
-      #   command: prefect orion start
-      #   environment:
-      #     PREFECT_API_DATABASE_CONNECTION_URL: postgresql+psycopg2://prefectuser:yourpassword@postgres/prefect
-      #   depends_on:
-      #     - postgres
-      #   ports:
-      #     - "4200:4200"
-      #   volumes:
-      #     - ./scripts:/root/scripts
-
-        #  prefect-agent:
-        #    image: prefecthq/prefect:2.0.4-python3.8
-        #    command: prefect work-queue create my_queue & prefect agent start
-        #    environment:
-        #      PREFECT_API_URL: http://prefect-server:4200/api
-        #    depends_on:
-        #      - prefect-server
-
-      #volumes:
-      #  postgres_data:

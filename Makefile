@@ -91,7 +91,7 @@ clean:
 
 # Install and run everything
 .PHONY: all
-all: install pre-commit lint format compose-up start-prefect train build
+all: install pre-commit lint format train build compose-up start-prefect
 
 # Help
 .PHONY: help
